@@ -1,3 +1,7 @@
+olink_meta<-read.csv('../FE_sepsis_techCT/Data/Olink_meta.csv')
+
+
+
 # Set seed for reproducibility
 set.seed(123)
 
@@ -8,8 +12,7 @@ log2_values <- log2(runif(52 * 500) + 1e-10) # Adding a small value to avoid log
 df <- data.frame(matrix(log2_values, nrow = 52, ncol = 500))
 
 # Display the first few rows of the data frame
-colnames(df)<-paste('Protein', sample(35:3825, 500, replace = TRUE))
-rownames(df)<-paste('Patient', sample(1:1000, 52, replace = TRUE))
+colnames(df)<-olink_meta$OlinkID[0:500]
 
 #write.csv(df, 'test_data.csv')
 
@@ -19,5 +22,6 @@ df$Age<-sample(26:95, 52, replace = TRUE)
 df$Co_infection<-sample(c(TRUE, FALSE),52, replace = TRUE)
 df$Alive90<-sample(c(TRUE, FALSE),52, replace = TRUE)
 
-df%>%
-  colnames()
+df<-df%>%mutate(DAid = paste0('DA0', row_number()))
+
+df%>%colnames()
