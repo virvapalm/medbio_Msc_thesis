@@ -1,11 +1,5 @@
 #This is a file for running differential expression of PEA data for the sepsis study
 
-# Library
-library(limma)
-library(docstring)
-library(ggrepel)
-library(patchwork)
-
 # directory 
 current_path = rstudioapi::getActiveDocumentContext()$path 
 setwd(dirname(current_path ))
@@ -14,21 +8,24 @@ setwd(dirname(current_path ))
 main_dir <- getwd()
 
 #### Set directory ----
-source('SPS_prep.R', local = TRUE)
+source('Set_up_file.R', local = TRUE)
+
+# Library
+library(limma)
 
 ### Download data ---- 
 # KF metadata 290124
-KS_meta <- read.csv("Export/KS_matched_meta.csv") 
+KS_meta <- read.csv("../FE_sepsis_techCT/Export/KS_matched_meta.csv") 
 
 #  metadata
-df_DA_meta <- read.csv("Data/Export_meta_v2.0.2.csv") 
+df_DA_meta <- read.csv("../FE_sepsis_techCT/Data/Export_meta_v2.0.2.csv") 
 
-df_meta_pnc<-read.csv('Export/DE_meta_pnc.csv')
+df_meta_pnc<-read.csv('../FE_sepsis_techCT/Export/DE_meta_pnc.csv')
 
-Olink_meta <-read.csv('Export/Olink_meta.csv')
+Olink_meta <-read.csv('../FE_sepsis_techCT/Export/Olink_meta.csv')
 
 # Get NPX Data
-df_NPX_unfiltered<-read.csv('Data/Export_expr_v2.0.1.csv')
+df_NPX_unfiltered<-read.csv('../FE_sepsis_techCT/Data/Export_expr_v2.0.1.csv')
 
 #### GET info from BINN and featseek ----
 
@@ -36,7 +33,7 @@ df_NPX_unfiltered<-read.csv('Data/Export_expr_v2.0.1.csv')
 replicated_olink<-c("OID20101","OID20074","OID20153","OID21237","OID21276","OID21430","OID20473","OID20563","OID20631","OID20848","OID20911","OID20997")
 
 
-oid_feat_seek<-read.csv('Export/oid_feat_seek')%>%
+oid_feat_seek<-read.csv('../FE_sepsis_techCT/Export/oid_feat_seek')%>%
   pull(selected)
 
 pnc_uniprot <- read.csv('~/Documents/github/BINN_elin/data/pnc_biomarkers_new.csv', sep = ',')%>%
